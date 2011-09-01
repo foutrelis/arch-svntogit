@@ -11,7 +11,7 @@ update_pkg() {
 	if [[ -e $pkg ]]; then
 		if ! git show-ref -q packages/$pkg; then
 			# Added package; create package branch
-			git branch packages/$pkg
+			git branch packages/$pkg master
 			git filter-branch -f --subdirectory-filter $pkg packages/$pkg \
 				>/dev/null
 		else
