@@ -50,7 +50,7 @@ for repo in ${REPOS[@]}; do
 	git checkout -q master
 
 	echo '  -> Fetching changes from SVN'
-	git svn rebase -q
+	git svn rebase &>/dev/null
 
 	echo '  -> Updating package branches'
 	pkgs=($(git diff --name-only last-commit-processed.. | cut -d'/' -f1 |
