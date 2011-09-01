@@ -8,7 +8,7 @@ LOCKFILE="$0.lock"
 update_pkg() {
 	local pkg=$1
 
-	if [[ -e $pkg ]]; then
+	if git show master:$pkg &>/dev/null; then
 		if ! git show-ref -q packages/$pkg; then
 			# Added package; create package branch
 			git branch packages/$pkg master
