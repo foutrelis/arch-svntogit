@@ -20,7 +20,6 @@ update_pkg() {
 			git format-patch --stdout last-commit-processed..master -- $pkg |
 				git am -p2 --whitespace=fix --committer-date-is-author-date \
 					&>/dev/null
-			git checkout -q master
 		fi
 	else
 		# Deleted package; destroy the branch and stop processing this package
@@ -63,6 +62,9 @@ for repo in ${REPOS[@]}; do
 			echo "    > Updating package branch for '$pkg'"
 			update_pkg $pkg
 		done
+
+		# Return to the master branch
+		git checkout -q master
 
 		echo "  -> Updated $pkg_count package branches"
 
