@@ -49,7 +49,13 @@ for repo in ${REPOS[@]}; do
 	git checkout -q master
 
 	echo '  -> Fetching changes from SVN'
-	git svn rebase &>/dev/null
+	if ! git svn rebase &>/dev/null; then
+		echo '    > git svn rebase command failed; skipping to next repository'
+		echo "==> Aborted updating '$repo' on $(date -u)"
+		echo
+		popd >/dev/null
+		continue
+	fi
 
 	echo '  -> Updating package branches'
 	pkgs=($(git diff --name-only last-commit-processed.. | cut -d'/' -f1 |
