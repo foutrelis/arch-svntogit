@@ -18,8 +18,7 @@ update_pkg() {
 			# Updated package; apply changes to package branch
 			git checkout -q packages/$pkg
 			git format-patch --stdout last-commit-processed..master -- $pkg |
-				git am -p2 --whitespace=fix --committer-date-is-author-date \
-					&>/dev/null
+				git am -p2 --committer-date-is-author-date &>/dev/null
 		fi
 	else
 		# Deleted package; destroy the branch and stop processing this package
