@@ -75,7 +75,9 @@ for repo in ${REPOS[@]}; do
 		echo "  -> Updated $pkg_count package branches"
 
 		echo '  -> Updating public Git repository'
-		git push -q --all $REMOTE
+		if ! git push -q --all $REMOTE &>/dev/null; then
+			echo '    > git push command failed'
+		fi
 	else
 		echo '    > No updates found'
 	fi
